@@ -29,6 +29,15 @@
             android:textStyle="bold"
             tools:text="Салфетки" />
 
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="5" />
+
 
     </LinearLayout>
 
