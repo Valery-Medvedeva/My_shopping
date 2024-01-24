@@ -42,10 +42,10 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCa
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (getItem(position).enabled) {
-            return enabledType
+        return if (getItem(position).enabled) {
+            enabledType
         } else {
-            return disabledType
+            disabledType
         }
     }
 

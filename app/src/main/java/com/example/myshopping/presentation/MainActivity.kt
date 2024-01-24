@@ -1,5 +1,6 @@
 package com.example.myshopping.presentation
 
+import android.content.Intent
 import android.media.MediaRouter.SimpleCallback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshopping.R
 import com.example.myshopping.domain.ShopItem
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Collections
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopList.observe(this) {
             shopListAdapter.submitList(it)
+        }
+        val buttonAddButton= findViewById<FloatingActionButton>(R.id.button_add_shop_item)
+        buttonAddButton.setOnClickListener{
+            val intent=ShopItemActivity.newIntentAdd(this)
+            startActivity(intent)
         }
     }
 
@@ -58,6 +65,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
+            val intent = ShopItemActivity.newIntentEdit(this, it.id)
+            startActivity(intent)
         }
     }
 

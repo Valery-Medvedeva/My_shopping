@@ -4,4 +4,6 @@
     <string name="name">Name:</string>
     <string name="count">Count:</string>
     <string name="save">Save</string>
+    <string name="error_input_count">ошибка введения количества</string>
+    <string name="error_input_name">ошибка введения наименования</string>
 </resources>
