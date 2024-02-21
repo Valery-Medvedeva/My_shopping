@@ -51,7 +51,6 @@ class ShopItemViewModel : ViewModel() {
                 editShopItemUseCase.editShopItem(item)
                 finishWork()
             }
-
         }
         //TODO: remake
     }
