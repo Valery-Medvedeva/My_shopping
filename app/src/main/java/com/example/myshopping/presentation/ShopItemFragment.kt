@@ -1,23 +1,20 @@
 package com.example.myshopping.presentation
 
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.myshopping.R
+import com.example.myshopping.ShoppingApp
 import com.example.myshopping.databinding.FragmentShopItemBinding
+import com.example.myshopping.di.ViewModelFactory
 import com.example.myshopping.domain.ShopItem
-import com.google.android.material.textfield.TextInputLayout
+import javax.inject.Inject
 import kotlin.RuntimeException
 
 class ShopItemFragment : Fragment() {
@@ -25,14 +22,21 @@ class ShopItemFragment : Fragment() {
     private var _binding: FragmentShopItemBinding? = null
     private val binding: FragmentShopItemBinding
         get() = _binding ?: throw RuntimeException("FragmentShopItemBinding==null")
-
-    private lateinit var viewModel: ShopItemViewModel
+    private val component by lazy {
+        (requireActivity().application as ShoppingApp).component
+    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[ShopItemViewModel::class.java]
+    }
 
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
 
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
     override fun onAttach(context: Context) {
+        component.inject(this)
         super.onAttach(context)
         if (context is OnEditingFinishedListener) {
             onEditingFinishedListener = context
@@ -57,7 +61,6 @@ class ShopItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         binding.viewModel=viewModel
         binding.lifecycleOwner=viewLifecycleOwner
         addTextChangeListeners()
